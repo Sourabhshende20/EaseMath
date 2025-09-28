@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matrix Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 30px;
+      background: #ede9fe;
+      color: #4c1d95;
+    }
+    h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #6b21a8;
+    }
+    select, input {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 4px;
+    }
+    .matrix-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 20px;
+    }
+    .matrix {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #c4b5fd;
+      background: #f5f3ff;
+    }
+    .matrix input {
+      width: 40px;
+      height: 40px;
+      margin: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    .buttons button {
+      padding: 10px 20px;
+      margin: 10px 10px 0;
+      border: 1px solid #7e22ce;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #e9d5ff;
+      color: #4c1d95;
+    }
+    .buttons button:hover {
+      background: #d8b4fe;
+    }
+    .result {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Matrix Calculator</h2>
+  <label for="size">Matrix Size:</label>
+  <select id="size" onchange="updateMatrices()">
+    <option value="2">2 x 2</option>
+    <option value="3">3 x 3</option>
+    <option value="4">4 x 4</option>
+  </select>
+
+  <div class="matrix-container">
+    <div>
+      <h3>Matrix A</h3>
+      <div id="matrixA" class="matrix"></div>
+    </div>
+    <div>
+      <h3>Matrix B</h3>
+      <div id="matrixB" class="matrix"></div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button onclick="calculate('add')">Addition</button>
+    <button onclick="calculate('subtract')">Subtraction</button>
+    <button onclick="calculate('multiply')">Multiplication</button>
+    <br>
+    <button onclick="calculateDeterminant('matrixA')">Determinant of A</button>
+    <button onclick="calculateDeterminant('matrixB')">Determinant of B</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    let size = 2;
+
+    function createMatrixInputs(containerId, size) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      for (let i = 0; i < size; i++) {
+        const row = document.createElement('div');
+        for (let j = 0; j < size; j++) {
+          const input = document.createElement('input');
+          input.type = 'number';
+          input.value = 0;
+          input.id = `${containerId}-${i}-${j}`;
+          row.appendChild(input);
+        }
+        container.appendChild(row);
+      }
+    }
+
+    function updateMatrices() {
+      size = parseInt(document.getElementById('size').value);
+      createMatrixInputs('matrixA', size);
+      createMatrixInputs('matrixB', size);
+      document.getElementById('result').innerHTML = '';
+    }
+
+    function getMatrixValues(id) {
+      const matrix = [];
+      for (let i = 0; i < size; i++) {
+        const row = [];
+        for (let j = 0; j < size; j++) {
+          const val = parseFloat(document.getElementById(`${id}-${i}-${j}`).value) || 0;
+          row.push(val);
+        }
+        matrix.push(row);
+      }
+      return matrix;
+    }
+
+    function calculate(operation) {
+      const A = getMatrixValues('matrixA');
+      const B = getMatrixValues('matrixB');
+      let result = [];
+
+      if (operation === 'add') {
+        result = A.map((row, i) =>
+          row.map((val, j) => val + B[i][j])
+        );
+      } else if (operation === 'subtract') {
+        result = A.map((row, i) =>
+          row.map((val, j) => val - B[i][j])
+        );
+      } else if (operation === 'multiply') {
+        result = Array(size).fill().map(() => Array(size).fill(0));
+        for (let i = 0; i < size; i++) {
+          for (let j = 0; j < size; j++) {
+            for (let k = 0; k < size; k++) {
+              result[i][j] += A[i][k] * B[k][j];
+            }
+          }
+        }
+      }
+
+      displayResult(result);
+    }
+
+    function calculateDeterminant(matrixId) {
+      const matrix = getMatrixValues(matrixId);
+      let det = determinant(matrix);
+      document.getElementById('result').innerHTML = `<h3>Determinant of ${matrixId === 'matrixA' ? 'A' : 'B'}: ${det}</h3>`;
+    }
+
+    function determinant(m) {
+      if (m.length === 2) {
+        return m[0][0] * m[1][1] - m[0][1] * m[1][0];
+      }
+      if (m.length === 3) {
+        return (
+          m[0][0] * (m[1][1] * m[2][2] - m[1][2] * m[2][1]) -
+          m[0][1] * (m[1][0] * m[2][2] - m[1][2] * m[2][0]) +
+          m[0][2] * (m[1][0] * m[2][1] - m[1][1] * m[2][0])
+        );
+      }
+      // Recursive function for NxN matrix using Laplace expansion
+      const size = m.length;
+      if (size > 3) {
+        let det = 0;
+        for (let i = 0; i < size; i++) {
+          const subMatrix = m.slice(1).map(row => row.filter((_, j) => j !== i));
+          det += (i % 2 === 0 ? 1 : -1) * m[0][i] * determinant(subMatrix);
+        }
+        return det;
+      }
+      return 0;
+    }
+
+    function displayResult(matrix) {
+      const container = document.getElementById('result');
+      container.innerHTML = `<h3>Result</h3>`;
+      const matrixDiv = document.createElement('div');
+      matrixDiv.className = 'matrix';
+      matrix.forEach(row => {
+        const rowDiv = document.createElement('div');
+        row.forEach(value => {
+          const cell = document.createElement('div');
+          cell.textContent = value;
+          cell.style.display = 'inline-block';
+          cell.style.width = '40px';
+          cell.style.height = '40px';
+          cell.style.margin = '5px';
+          cell.style.lineHeight = '40px';
+          cell.style.fontWeight = 'bold';
+          cell.style.border = '1px solid #ccc';
+          rowDiv.appendChild(cell);
+        });
+        matrixDiv.appendChild(rowDiv);
+      });
+      container.appendChild(matrixDiv);
+    }
+
+    updateMatrices();
+  </script>
+</body>
+</html>

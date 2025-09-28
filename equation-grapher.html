@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EquatiGrapheron </title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #ebe1f7;
+        color: #6a0dad;
+    }
+    #container {
+      text-align: center;
+      width: 80%;
+      max-width: 600px;
+    }
+    input {
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      font-size: 18px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #d5b3f4;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #6a0dad;
+    }
+    #graph {
+      width: 100%;
+      height: 500px;
+      margin-top: 20px;
+      background-color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container">
+  <h1>Equation Grapher</h1>
+  <input type="text" id="equation" placeholder="Enter Equation e.g., x^2-4x+3=0" />
+  <button onclick="plotGraph()">Plot Graph</button>
+  <div id="graph"></div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+  function plotGraph() {
+    const equation = document.getElementById("equation").value.trim();
+
+    if (!equation) {
+      alert("Please enter an equation.");
+      return;
+    }
+
+    const parsed = parseEquation(equation);
+    if (!parsed) {
+      alert("Invalid equation. Try linear, quadratic, exponential, trigonometric, etc.");
+      return;
+    }
+
+    const { type, func } = parsed;
+    const xValues = [];
+    const yValues = [];
+
+    for (let x = -10; x <= 10; x += 0.1) {
+      try {
+        const y = func(x);
+        if (isFinite(y)) {
+          xValues.push(x);
+          yValues.push(y);
+        }
+      } catch (e) {
+        // Skip invalid points (like log(negative) or tan(pi/2))
+      }
+    }
+
+    Plotly.newPlot('graph', [{
+      x: xValues,
+      y: yValues,
+      type: 'scatter',
+      mode: 'lines',
+      line: { color: 'blue' }
+    }], {
+      title: `Graph of ${equation} (${type})`,
+      xaxis: { title: 'X-axis' },
+      yaxis: { title: 'Y-axis' }
+    });
+  }
+
+  function parseEquation(equation) {
+    equation = equation.replace(/\s+/g, '').toLowerCase();
+
+    // Quadratic: ax^2+bx+c=0
+    const quad = equation.match(/^([+-]?\d*\.?\d*)x\^2([+-]?\d*\.?\d*)x([+-]?\d+)?=0$/);
+    if (quad) {
+      const a = parseFloat(quad[1] || 1);
+      const b = parseFloat(quad[2] || 0);
+      const c = parseFloat(quad[3] || 0);
+      return { type: "Quadratic", func: x => a * x ** 2 + b * x + c };
+    }
+
+    // Linear: mx+b=0
+    const linear = equation.match(/^([+-]?\d*\.?\d*)x([+-]?\d+)?=0$/);
+    if (linear) {
+      const m = parseFloat(linear[1] || 1);
+      const b = parseFloat(linear[2] || 0);
+      return { type: "Linear", func: x => m * x + b };
+    }
+
+    // Cubic: ax^3+bx^2+cx+d=0
+    const cubic = equation.match(/^([+-]?\d*\.?\d*)x\^3([+-]?\d*\.?\d*)x\^2([+-]?\d*\.?\d*)x([+-]?\d+)?=0$/);
+    if (cubic) {
+      const a = parseFloat(cubic[1] || 1);
+      const b = parseFloat(cubic[2] || 0);
+      const c = parseFloat(cubic[3] || 0);
+      const d = parseFloat(cubic[4] || 0);
+      return { type: "Cubic", func: x => a * x ** 3 + b * x ** 2 + c * x + d };
+    }
+
+    // Exponential: ae^(bx)
+    const exp = equation.match(/^([+-]?\d*\.?\d*)e\^([+-]?\d*\.?\d*)x$/);
+    if (exp) {
+      const a = parseFloat(exp[1] || 1);
+      const b = parseFloat(exp[2] || 1);
+      return { type: "Exponential", func: x => a * Math.exp(b * x) };
+    }
+
+    // Logarithmic: alog(bx)
+    const log = equation.match(/^([+-]?\d*\.?\d*)log\(([+-]?\d*\.?\d*)x\)$/);
+    if (log) {
+      const a = parseFloat(log[1] || 1);
+      const b = parseFloat(log[2] || 1);
+      return { type: "Logarithmic", func: x => a * Math.log(b * x) };
+    }
+
+    // Trigonometric: sin, cos, tan
+    const trig = equation.match(/^([+-]?\d*\.?\d*)?(sin|cos|tan)\(([+-]?\d*\.?\d*)x\)$/);
+    if (trig) {
+      const a = parseFloat(trig[1] || 1);
+      const f = trig[2];
+      const b = parseFloat(trig[3] || 1);
+      const funcMap = {
+        sin: x => a * Math.sin(b * x),
+        cos: x => a * Math.cos(b * x),
+        tan: x => a * Math.tan(b * x)
+      };
+      return { type: `${f.charAt(0).toUpperCase() + f.slice(1)}`, func: funcMap[f] };
+    }
+
+    // Polynomial (generic form like 2x^3+4x^2-5x+1)
+    const poly = equation.match(/^([+-]?\d*\.?\d*)x\^\d+([+-].+)*$/);
+    if (poly) {
+      const terms = equation.split(/(?=[+-])/);
+      return {
+        type: "Polynomial",
+        func: x =>
+          terms.reduce((sum, term) => {
+            const match = term.match(/^([+-]?\d*\.?\d*)x\^(\d+)$/);
+            if (match) {
+              const coeff = parseFloat(match[1] || 1);
+              const pow = parseInt(match[2]);
+              return sum + coeff * Math.pow(x, pow);
+            } else if (term.match(/^([+-]?\d+)$/)) {
+              return sum + parseFloat(term);
+            }
+            return sum;
+          }, 0)
+      };
+    }
+
+    // Rational: a/bx
+    const rational = equation.match(/^([+-]?\d*\.?\d*)\/([+-]?\d*\.?\d*)x$/);
+    if (rational) {
+      const a = parseFloat(rational[1] || 1);
+      const b = parseFloat(rational[2] || 1);
+      return { type: "Rational", func: x => a / (b * x) };
+    }
+
+    return null;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EaseMath</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script type="module" src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"></script>
+  <style>
+    .tool-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-purple-200 to-indigo-200 font-sans scroll-smooth">
+
+  <!-- Navbar -->
+  <nav class="bg-purple-700 p-4 text-white flex justify-between items-center shadow-lg relative">
+    <div class="flex items-center space-x-4">
+      <img src="logo.jpg" alt="Logo" class="w-10 h-10 rounded-full border-2 border-white shadow-md" />
+      <span class="text-3xl font-extrabold text-white">EaseMath</span>
+    </div>
+    <!-- Hamburger button for mobile -->
+    <button id="menu-btn" class="md:hidden focus:outline-none">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+      </svg>
+    </button>
+    <!-- Desktop Navigation Links -->
+    <div id="navbar-links" class="space-x-6 text-lg hidden md:flex">
+      <a href="#home" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('home')">Home</a>
+      <a href="#help" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('help')">Help</a>
+      <a href="#contact" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('contact')">Contact Us</a>
+      <a href="#suggestion" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('suggestion')">Feedback</a>
+    </div>
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="absolute top-full left-0 w-full bg-purple-700 text-white flex flex-col items-center space-y-4 py-4 hidden md:hidden">
+      <a href="#home" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('home'); toggleMenu()">Home</a>
+      <a href="#help" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('help'); toggleMenu()">Help</a>
+      <a href="#contact" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('contact'); toggleMenu()">Contact Us</a>
+      <a href="#suggestion" class="text-white hover:text-yellow-300 font-medium transition" onclick="showSection('suggestion'); toggleMenu()">Feedback</a>
+    </div>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="text-center mt-32 p-10">
+    <h1 class="text-6xl md:text-8xl font-extrabold text-gray-900">MATH MADE <span class="text-indigo-700">EASY</span></h1>
+    <p class="mt-4 text-xl text-gray-700">Try supreme math solver enhanced by expert help</p>
+
+    <!-- Navigation Buttons -->
+    <div class="mt-10 flex flex-wrap justify-center gap-4">
+      <a href="matrix-calculator.html" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">MATRIX CALCULATOR</a>
+      <a href="equation-root-solver.html" class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-500 transition">EQUATION ROOT SOLVER</a>
+      <a href="equation-grapher.html" class="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition">EQUATION GRAPHER</a>
+      <a href="base-converter.html" class="bg-indigo-700 text-white px-6 py-2 rounded hover:bg-indigo-500 transition">BASE CONVERTER</a>
+    </div>
+
+    <!-- Equation to Graph Section -->
+    <div class="my-16 grid md:grid-cols-2 gap-8 items-center">
+      <div class="flex justify-center">
+        <dotlottie-player
+          src="https://lottie.host/059366fb-7aaf-499e-a438-96020d794421/4gSiXvSUy5.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop autoplay
+        ></dotlottie-player>
+      </div>
+      <div class="text-left">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-800 mb-4">EQUATION GRAPHER</h2>
+        <ul class="list-disc pl-6 space-y-2 text-lg text-gray-700">
+          <li class="animate-fade-in">Visualize equations with beautiful graphs</li>
+          <li class="animate-fade-in delay-[200ms]">Handles linear, quadratic, and more</li>
+          <li class="animate-fade-in delay-[400ms]">Interactive and intuitive graphing</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Matrix Section -->
+    <div class="my-16 grid md:grid-cols-2 gap-8 items-center">
+      <div class="text-left">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-indigo-800 mb-4">MATRIX CALCULATOR</h2>
+        <ul class="list-disc pl-6 space-y-2 text-lg text-gray-700">
+          <li class="animate-fade-in">Matrix multiplication</li>
+          <li class="animate-fade-in delay-[200ms]">Matrix addition</li>
+          <li class="animate-fade-in delay-[400ms]">Matrix subtraction</li>
+          <li class="animate-fade-in delay-[600ms]">Support for matrices of any size</li>
+        </ul>
+      </div>
+      <div class="flex justify-center">
+        <dotlottie-player
+          src="https://lottie.host/31588e7b-8d27-48e4-971a-e07dde1544dc/8ssMS1Uw1z.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop autoplay
+        ></dotlottie-player>
+      </div>
+    </div>
+
+    <!-- Root Solver Section -->
+    <div class="my-16 grid md:grid-cols-2 gap-8 items-center">
+      <div class="flex justify-center">
+        <dotlottie-player 
+          src="https://lottie.host/3f36ab1b-40f3-4176-8ffa-e2ac5a226220/SRGGonkT6V.lottie"
+          background="transparent"
+          speed="1"
+          style="width: 300px; height: 300px"
+          loop autoplay
+        ></dotlottie-player>
+      </div>
+      <div class="text-left">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-purple-800 mb-4">EQUATION ROOT SOLVER</h2>
+        <ul class="list-disc pl-6 space-y-2 text-lg text-gray-700">
+          <li class="animate-fade-in">Solves linear and quadratic equations</li>
+          <li class="animate-fade-in delay-[200ms]">Handles real and complex roots</li>
+          <li class="animate-fade-in delay-[400ms]">Easy to use for quick calculations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Help Section -->
+  <!-- Help Section -->
+<section id="help" class="hidden text-center mt-32 p-10">
+  <h2 class="text-4xl font-bold text-gray-900 mb-8">How to Use This Website</h2>
+
+  <div class="max-w-4xl mx-auto text-left space-y-8 text-lg text-gray-700">
+    <div class="bg-yellow-100 p-6 rounded-lg shadow-md">
+      <h3 class="text-2xl font-bold text-yellow-800 mb-2">🏠 1. Start at the Home Page</h3>
+      <p>
+        You'll see multiple tools for different types of math problems like:
+        <ul class="list-disc ml-6 mt-2 space-y-1">
+          <li><strong>Matrix Multiplier</strong>: Perform matrix operations like multiplication, addition, and subtraction.</li>
+          <li><strong>Equation to Root Solver</strong>: Find roots of linear and quadratic equations.</li>
+          <li><strong>Equation to Graph Converter</strong>: Visualize equations through interactive graphs.</li>
+          <li><strong>Base Converter</strong>: Convert numbers between binary, decimal, octal, and hexadecimal.</li>
+        </ul>
+        Just click on the tool you need, and you’ll be redirected to the dedicated page.
+      </p>
+    </div>
+
+    <div class="bg-blue-100 p-6 rounded-lg shadow-md">
+      <h3 class="text-2xl font-bold text-blue-800 mb-2">🧠 2. Understanding Each Tool</h3>
+      <ul class="list-disc ml-6 space-y-1">
+        <li><strong>Matrix Multiplier</strong>: Input two matrices and instantly get the result.</li>
+        <li><strong>Equation to Graph</strong>: Input a math equation (e.g., y = 2x + 1) and visualize the graph.</li>
+        <li><strong>Root Solver</strong>: Solve for roots of equations (real or complex).</li>
+        <li><strong>Base Converter</strong>: Instantly convert numbers between base systems.</li>
+      </ul>
+    </div>
+
+    <div class="bg-green-100 p-6 rounded-lg shadow-md">
+      <h3 class="text-2xl font-bold text-green-800 mb-2">🆘 3. Need Help?</h3>
+      <p>If you're stuck, try refreshing the page or carefully re-entering your input. You can always come back to this Help section for guidance.</p>
+    </div>
+
+    <div class="bg-purple-100 p-6 rounded-lg shadow-md">
+      <h3 class="text-2xl font-bold text-purple-800 mb-2">💬 4. Have Feedback or Ideas?</h3>
+      <p>
+        Go to the <strong>Feedback</strong> section to share your thoughts or suggestions.<br/>
+        Let us know what you love, what could be improved, or suggest new features.
+      </p>
+    </div>
+
+    <div class="bg-indigo-100 p-6 rounded-lg shadow-md">
+      <h3 class="text-2xl font-bold text-indigo-800 mb-2">📞 5. Contact the Team</h3>
+      <p>Visit the <strong>Contact Us</strong> section for email addresses and LinkedIn links to reach the developers directly.</p>
+    </div>
+  </div>
+</section>
+
+
+  <!-- Contact Section -->
+  <section id="contact" class="hidden text-center mt-32 p-10">
+    <h2 class="text-4xl font-bold text-gray-900">Contact Us</h2>
+    <div class="mt-6">
+      <p class="text-2xl font-bold">📧 Emails</p>
+      <p class="mt-4 text-blue-600 text-lg font-bold">
+        <a href="mailto:sourabhshende20@gmail.com" class="hover:underline">Sourabh Shende:</a> sourabhshende20@gmail.com
+      </p>
+      <p class="mt-2 text-blue-600 text-lg font-bold">
+        <a href="mailto:bagulsakshi29@gmail.com" class="hover:underline">Sakshi Bagul:</a> bagulsakshi29@gmail.com
+      </p>
+      <p class="mt-2 text-blue-600 text-lg font-bold">
+        <a href="mailto:vaishubokare28@gmail.com" class="hover:underline">Vaisnavi Bokare:</a> vaishubokare28@gmail.com
+      </p>
+      <p class="mt-2 text-blue-600 text-lg font-bold">
+        <a href="mailto:kumbharsushrut@gmail.com" class="hover:underline">Sushrut kumbhar:</a>kumbharsushrut@gmail.com
+      </p>
+    </div>
+    <div class="mt-6">
+      <p class="text-2xl font-bold">📞 Phone Numbers</p>
+      <p class="mt-2 text-lg">Sourabh Shende: 95298 99366</p>
+      <p class="mt-2 text-lg">Sakshi Bagul: 92849 80414</p>
+      <p class="mt-2 text-lg">Vaishanvi bokare: 99604 78844</p>
+      <p class="mt-2 text-lg">Sushrut Kumbhar: 95619 98774</p>
+
+    </div>
+    <div class="mt-6 flex flex-col md:flex-row justify-center items-center gap-6">
+      <a href="https://www.linkedin.com/in/sourabh-shende-571b69321/" target="_blank" class="flex items-center space-x-2 hover:text-indigo-700">
+        <img src="https://img.icons8.com/?size=96&id=13930&format=png" alt="LinkedIn" class="w-8" />
+        <span class="text-gray-900 font-bold text-lg">Sourabh Shende</span>
+      </a>
+      <a href="https://www.linkedin.com/in/sakshi-bagul-8463b1277/" target="_blank" class="flex items-center space-x-2 hover:text-indigo-700">
+        <img src="https://img.icons8.com/?size=96&id=13930&format=png" alt="LinkedIn" class="w-8" />
+        <span class="text-gray-900 font-bold text-lg">Sakshi Bagul</span>
+      </a>
+      <a href="https://www.linkedin.com/in/vaishnavi-bokare-091aba28b/" target="_blank" class="flex items-center space-x-2 hover:text-indigo-700">
+        <img src="https://img.icons8.com/?size=96&id=13930&format=png" alt="LinkedIn" class="w-8" />
+        <span class="text-gray-900 font-bold text-lg">Vaishanvi bokare</span>
+      </a>
+      <a href="https://www.linkedin.com/in/sushrut-kumbhar-739914303/" target="_blank" class="flex items-center space-x-2 hover:text-indigo-700">
+        <img src="https://img.icons8.com/?size=96&id=13930&format=png" alt="LinkedIn" class="w-8" />
+        <span class="text-gray-900 font-bold text-lg">Sushrut Kumbhar</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Feedback Section -->
+  <section id="suggestion" class="hidden text-center mt-32 p-10">
+    <h2 class="text-4xl font-bold text-gray-900 mb-10">Feedback & Suggestions</h2>
+    <div class="max-w-4xl mx-auto">
+      <p class="text-lg text-gray-700 mb-6">We value your feedback! Please share your thoughts below to help us improve.</p>
+      <div class="bg-white shadow-lg rounded-lg p-6 mb-10">
+        <h3 class="text-2xl font-bold text-indigo-700 mb-4">Feedback</h3>
+        <textarea placeholder="Write your feedback here..." class="w-full h-40 p-4 rounded-lg border border-indigo-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+      </div>
+      <p class="text-lg text-gray-700 mb-6">If you have suggestions for more advantages, feel free to share below.</p>
+      <div class="bg-white shadow-lg rounded-lg p-6">
+        <h3 class="text-2xl font-bold text-purple-700 mb-4">Suggestions</h3>
+        <textarea placeholder="Write your suggestion here..." class="w-full h-40 p-4 rounded-lg border border-purple-300 focus:ring-2 focus:ring-purple-500 focus:outline-none"></textarea>
+      </div>
+      <button onclick="alert('Thank you for your input!')" class="mt-10 bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-8 py-3 rounded-full hover:from-purple-500 hover:to-indigo-600 transition">Submit</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="mt-20 text-center text-white py-4 bg-gray-900">
+    &copy; 2025 Easemath. All rights reserved.
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function showSection(sectionId) {
+      const sections = ['home', 'help', 'contact', 'suggestion'];
+      sections.forEach(id => document.getElementById(id).classList.add('hidden'));
+      const activeSection = document.getElementById(sectionId);
+      activeSection.classList.remove('hidden');
+      activeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Mobile menu toggle function
+    function toggleMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      mobileMenu.classList.toggle('hidden');
+    }
+    
+    document.getElementById('menu-btn').addEventListener('click', toggleMenu);
+
+
+     
+  </script>
+
+</body>
+</html>
