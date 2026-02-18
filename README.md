@@ -1,10 +1,10 @@
-🧪 EaseMath: Simple Web Toolkit for Math
+# EaseMath: Simple Web Toolkit for Math
 
-Hey there! 👋 Welcome to EaseMath—a collection of simple, distraction-free web tools designed to make common mathematical tasks quick and easy.
+Hey there! Welcome to EaseMath—a collection of simple, distraction-free web tools designed to make common mathematical tasks quick and easy.
 
 I built this project to practice my HTML, CSS (using Tailwind CSS), and JavaScript skills by creating genuinely useful, single-page web applications. Think of it as a small, growing lab of math utilities!
 
-🚀 The Tools Included
+## The Tools Included
 
 All the tools in this repository are separate HTML files. You can find their code in this repo and check out the live demo links (once this repository is published via GitHub Pages!).
 
@@ -18,7 +18,7 @@ Equation Grapher (equation-grapher.html): Allows you to input an equation and vi
 
 Matrix Calculator (matrix-calculator.html): Performs fundamental matrix operations (like addition, subtraction, and multiplication).
 
-🛠️ Technology Stack
+## Technology Stack
 
 This entire project is built using fundamental web technologies, making it easy for anyone to read and contribute to:
 
@@ -28,7 +28,7 @@ Tailwind CSS: Used for all modern, utility-first styling (makes it look nice!).
 
 JavaScript (Vanilla JS): All the calculation logic and DOM manipulation is handled with plain JavaScript—no large frameworks needed!
 
-🙏 Feedback & Suggestions
+## Feedback & Suggestions
 
 Since I'm just starting out, any feedback on the code structure, efficiency, or design is hugely appreciated!
 
